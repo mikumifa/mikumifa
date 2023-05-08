@@ -1,5 +1,3 @@
-### Internationalist Left (anti-establishment)
-
 ### Java / C++ / Python Programmer
 
 
