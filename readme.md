@@ -1,7 +1,7 @@
 ### Java / C++ / Python Programmer
 
-email：105569518@qq.com
-qq: 105569518
+email：1055069518@qq.com
+qq: 1055069518
 
 [My Blog](https://mikumifa.github.io)
 
