@@ -1,7 +1,9 @@
 ### Java / C++ / Python Programmer
 
 email：1055069518@qq.com
+
 qq: 1055069518
+
 [爱发电](https://afdian.net/a/mikumifa)
 
 ![统计](https://github-readme-stats.vercel.app/api?username=mikumifa&show_icons=true)
