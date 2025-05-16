@@ -1,9 +1,14 @@
-### Java / C++ / Python Programmer
+## 👨‍💻 Java / C++ / Python Programmer
 
-email：1055069518@qq.com
+📧 Email: [1055069518@qq.com](mailto:1055069518@qq.com)  
+🌸 Just a programmer & a bit of an anime fan~
 
-qq: 1055069518
+---
 
+### 📈 GitHub Stats
 
-![统计](https://github-readme-stats.vercel.app/api?username=mikumifa&show_icons=true)
-![代码](https://github-readme-stats.vercel.app/api/top-langs?username=mikumifa&show_icons=true&hide=javascript,html,vue,css)
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=mikumifa&show_icons=true&theme=tokyonight" alt="GitHub Stats" />
+  <br/>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=mikumifa&hide=javascript,html,vue,css&layout=compact&theme=tokyonight" alt="Top Languages" />
+</p>
