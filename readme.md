@@ -6,8 +6,5 @@
 
 ### 📈 GitHub Stats
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=mikumifa&show_icons=true&theme=tokyonight" alt="GitHub Stats" />
-  <br/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=mikumifa&hide=javascript,html,vue,css,java&layout=compact&theme=tokyonight" alt="Top Languages" />
-</p>
+![Stats](./profile/stats.svg)
+![Top Languages](./profile/top-langs.svg)
