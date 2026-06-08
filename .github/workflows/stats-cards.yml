@@ -26,11 +26,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           repos=$(
-            gh api \
-              -H "Accept: application/vnd.github+json" \
-              "/users/${OWNER}/repos?per_page=100&type=owner&sort=updated" \
-              --paginate \
-              --jq '[.[] | select(.fork == false) | {repo: .name}]'
+            gh repo list "$OWNER" \
+              --limit 1000 \
+              --json name,isFork \
+              --jq '[.[] | select(.isFork == false) | {repo: .name}]'
           )
 
           echo "Repositories:"
@@ -122,6 +121,7 @@ jobs:
         run: |
           mkdir -p profile/repos
           rm -f profile/repos/*.svg
+          rm -f profile/pin-*.svg
 
       - name: Download generated cards
         uses: actions/download-artifact@v4
@@ -137,9 +137,13 @@ jobs:
         run: |
           mkdir -p profile/repos
 
-          find artifacts -name "stats.svg" -exec cp {} profile/stats.svg \;
-          find artifacts -name "top-langs.svg" -exec cp {} profile/top-langs.svg \;
-          find artifacts -path "*/profile/repos/*.svg" -exec cp {} profile/repos/ \;
+          cp artifacts/summary-cards/stats.svg profile/stats.svg
+          cp artifacts/summary-cards/top-langs.svg profile/top-langs.svg
+
+          find artifacts -mindepth 2 -maxdepth 2 -type f -name "*.svg" \
+            ! -name "stats.svg" \
+            ! -name "top-langs.svg" \
+            -exec cp {} profile/repos/ \;
 
           echo "Final profile files:"
           find profile -type f -name "*.svg" -print
