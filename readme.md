@@ -54,8 +54,6 @@
 <div align="center">
   <div style="max-width: 900px; text-align: left;">
     <img src="./profile/repos/UmaShow.svg" alt="UmaShow" width="285" />
-    <img src="./profile/repos/UmaLiveShow.svg" alt="UmaLiveShow" width="285" />
-    <img src="./profile/repos/UmaWatch.svg" alt="UmaWatch" width="285" />
     <img src="./profile/repos/palworld_best_way.svg" alt="palworld_best_way" width="285" />
   </div>
 </div>
