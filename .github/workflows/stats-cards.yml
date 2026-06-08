@@ -13,10 +13,11 @@ permissions:
   contents: write
 
 jobs:
-  prepare:
+  list-repos:
     runs-on: ubuntu-latest
     outputs:
       repos: ${{ steps.list.outputs.repos }}
+
     steps:
       - name: List non-fork repositories
         id: list
@@ -29,22 +30,59 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               "/users/${OWNER}/repos?per_page=100&type=owner&sort=updated" \
               --paginate \
-              --jq '[.[] | select(.fork == false) | .name]'
+              --jq '[.[] | select(.fork == false) | {repo: .name}]'
           )
+
+          echo "Repositories:"
+          echo "$repos" | jq .
 
           echo "repos=${repos}" >> "$GITHUB_OUTPUT"
 
-  build:
-    needs: prepare
+  generate-repo-cards:
+    needs: list-repos
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.list-repos.outputs.repos) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare directory
+        run: |
+          mkdir -p profile/repos
+
+      - name: Generate pin card for ${{ matrix.repo }}
+        uses: readme-tools/github-readme-stats-action@v1
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=${{ matrix.repo }}
+          path: profile/repos/${{ matrix.repo }}.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check generated file
+        run: |
+          echo "Generated files:"
+          find profile -type f -name "*.svg" -print
+
+      - name: Upload repo card
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-card-${{ matrix.repo }}
+          path: profile/repos/${{ matrix.repo }}.svg
+          if-no-files-found: error
+
+  generate-summary-cards:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Clean old cards
+      - name: Prepare directory
         run: |
-          mkdir -p profile/repos
-          rm -f profile/repos/*.svg
+          mkdir -p profile
 
       - name: Generate stats card
         uses: readme-tools/github-readme-stats-action@v1
@@ -62,15 +100,55 @@ jobs:
           path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate repo cards
-        env:
-          OWNER: ${{ github.repository_owner }}
-          REPOS: ${{ needs.prepare.outputs.repos }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "$REPOS" | jq -r '.[]' > repos.txt
+      - name: Upload summary cards
+        uses: actions/upload-artifact@v4
+        with:
+          name: summary-cards
+          path: |
+            profile/stats.svg
+            profile/top-langs.svg
+          if-no-files-found: error
 
-          while read repo; do
-            echo "repo=${repo}" >> "$GITHUB_ENV"
-            echo "Generating card for ${repo}"
-          done < repos.txt
+  commit-cards:
+    needs:
+      - generate-repo-cards
+      - generate-summary-cards
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clean old cards
+        run: |
+          mkdir -p profile/repos
+          rm -f profile/repos/*.svg
+
+      - name: Download generated cards
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Debug downloaded artifacts
+        run: |
+          echo "Downloaded artifacts:"
+          find artifacts -type f -print
+
+      - name: Move cards into profile directory
+        run: |
+          mkdir -p profile/repos
+
+          find artifacts -name "stats.svg" -exec cp {} profile/stats.svg \;
+          find artifacts -name "top-langs.svg" -exec cp {} profile/top-langs.svg \;
+          find artifacts -path "*/profile/repos/*.svg" -exec cp {} profile/repos/ \;
+
+          echo "Final profile files:"
+          find profile -type f -name "*.svg" -print
+
+      - name: Commit cards
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+
+          git add profile
+          git commit -m "Update README cards" || exit 0
+          git push
