@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">Qizhuo Xie's GitHub Stats, Rank: A-</title>
-        <desc id="descId">Total Stars Earned: 4467, Total Commits  (last year) : 379, Total PRs: 55, Total Issues: 25, Contributed to (last year): 5</desc>
+        <desc id="descId">Total Stars Earned: 4469, Total Commits  (last year) : 379, Total PRs: 55, Total Issues: 25, Contributed to (last year): 5</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 76.67166928016609;
+        stroke-dashoffset: 76.67125886238026;
       }
     }
   
