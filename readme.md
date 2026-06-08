@@ -36,9 +36,6 @@
     <img src="./profile/repos/biliTickerSkill.svg" alt="biliTickerSkill" width="285" />
     <img src="./profile/repos/biliTickerStorm.svg" alt="biliTickerStorm" width="285" />
     <img src="./profile/repos/BiliShareMall.svg" alt="BiliShareMall" width="285" />
-    <img src="./profile/repos/biliVideoDownload.svg" alt="biliVideoDownload" width="285" />
-    <img src="./profile/repos/bili-mail.svg" alt="bili-mail" width="285" />
-    <img src="./profile/repos/QChatGPT-Docker-Installer.svg" alt="QChatGPT-Docker-Installer" width="285" />
   </div>
 </div>
 
@@ -62,17 +59,3 @@
     <img src="./profile/repos/palworld_best_way.svg" alt="palworld_best_way" width="285" />
   </div>
 </div>
-
-## ⚙️ Other Tools
-
-<div align="center">
-  <div style="max-width: 900px; text-align: left;">
-    <img src="./profile/repos/kafkaboot.svg" alt="kafkaboot" width="285" />
-    <img src="./profile/repos/mysqlLab.svg" alt="mysqlLab" width="285" />
-    <img src="./profile/repos/FuckAspx.svg" alt="FuckAspx" width="285" />
-    <img src="./profile/repos/FuckHarmonyOS.svg" alt="FuckHarmonyOS" width="285" />
-    <img src="./profile/repos/FuckYouling.svg" alt="FuckYouling" width="285" />
-    <img src="./profile/repos/iloveyou.svg" alt="iloveyou" width="285" />
-  </div>
-</div>
-```
