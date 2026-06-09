@@ -1,8 +1,8 @@
 
       <svg
         width="400"
-        height="150"
-        viewBox="0 0 400 150"
+        height="120"
+        viewBox="0 0 400 120"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         role="img"
@@ -100,10 +100,10 @@
     
 
     <text class="description" x="25" y="-5">
-      <tspan dy="1.2em" x="25">&#22270;&#24418;&#21270; B&#31449; &#20250;&#21592;&#36141;</tspan><tspan dy="1.2em" x="25">魔&#21147;&#36175; &#24066;&#38598; &#29228;&#34411;</tspan><tspan dy="1.2em" x="25">&#25628;&#32034; &#33050;&#26412;</tspan>
+      <tspan dy="1.2em" x="25">&#23547;&#25214;B&#31449;&#24066;&#38598;&#30340;&#26368;&#20248;&#20215;&#26684;</tspan>
     </text>
 
-    <g transform="translate(30, 75)">
+    <g transform="translate(30, 45)">
       <g transform="translate(0, 0)">
     <g data-testid="primary-lang">
       <circle data-testid="lang-color" cx="0" cy="-5" r="6" fill="#3178c6" />
