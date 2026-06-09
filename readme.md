@@ -32,10 +32,18 @@
 
 <div align="center">
   <div style="max-width: 900px; text-align: left;">
-    <img src="./profile/repos/biliTickerBuy.svg" alt="biliTickerBuy" width="285" />
-    <img src="./profile/repos/biliTickerSkill.svg" alt="biliTickerSkill" width="285" />
-    <img src="./profile/repos/biliTickerStorm.svg" alt="biliTickerStorm" width="285" />
-    <img src="./profile/repos/BiliShareMall.svg" alt="BiliShareMall" width="285" />
+    <a href="./biliTickerBuy">
+      <img src="./profile/repos/biliTickerBuy.svg" alt="biliTickerBuy" width="285" />
+    </a>
+    <a href="./biliTickerSkill">
+      <img src="./profile/repos/biliTickerSkill.svg" alt="biliTickerSkill" width="285" />
+    </a>
+    <a href="./biliTickerStorm">
+      <img src="./profile/repos/biliTickerStorm.svg" alt="biliTickerStorm" width="285" />
+    </a>
+    <a href="./BiliShareMall">
+      <img src="./profile/repos/BiliShareMall.svg" alt="BiliShareMall" width="285" />
+    </a>
   </div>
 </div>
 
@@ -43,9 +51,15 @@
 
 <div align="center">
   <div style="max-width: 900px; text-align: left;">
-    <img src="./profile/repos/GS-Quant.svg" alt="GS-Quant" width="285" />
-    <img src="./profile/repos/DMEA.svg" alt="DMEA" width="285" />
-    <img src="./profile/repos/HUMEA.svg" alt="HUMEA" width="285" />
+    <a href="./GS-Quant">
+      <img src="./profile/repos/GS-Quant.svg" alt="GS-Quant" width="285" />
+    </a>
+    <a href="./DMEA">
+      <img src="./profile/repos/DMEA.svg" alt="DMEA" width="285" />
+    </a>
+    <a href="./HUMEA">
+      <img src="./profile/repos/HUMEA.svg" alt="HUMEA" width="285" />
+    </a>
   </div>
 </div>
 
@@ -53,7 +67,11 @@
 
 <div align="center">
   <div style="max-width: 900px; text-align: left;">
-    <img src="./profile/repos/UmaShow.svg" alt="UmaShow" width="285" />
-    <img src="./profile/repos/palworld_best_way.svg" alt="palworld_best_way" width="285" />
+    <a href="./UmaShow">
+      <img src="./profile/repos/UmaShow.svg" alt="UmaShow" width="285" />
+    </a>
+    <a href="./palworld_best_way">
+      <img src="./profile/repos/palworld_best_way.svg" alt="palworld_best_way" width="285" />
+    </a>
   </div>
 </div>
