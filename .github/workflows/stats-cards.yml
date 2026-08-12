@@ -61,12 +61,22 @@ jobs:
           path: profile/repos/${{ matrix.repo }}.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check generated file
+      - name: Validate generated repository card
+        id: validate
         run: |
-          echo "Generated files:"
-          find profile -type f -name "*.svg" -print
+          card="profile/repos/${{ matrix.repo }}.svg"
+          if test -s "$card" \
+            && grep -q '<svg' "$card" \
+            && ! grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "The generated card is invalid; keeping the version already in the repository." >&2
+            rm -f "$card"
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Upload repo card
+        if: steps.validate.outputs.valid == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: repo-card-${{ matrix.repo }}
@@ -99,6 +109,17 @@ jobs:
           path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Validate generated summary cards
+        run: |
+          for card in profile/stats.svg profile/top-langs.svg; do
+            if ! test -s "$card" \
+              || ! grep -q '<svg' "$card" \
+              || grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
+              echo "$card is invalid; keeping the version already in the repository." >&2
+              rm -f "$card"
+            fi
+          done
+
       - name: Upload summary cards
         uses: actions/upload-artifact@v4
         with:
@@ -106,7 +127,7 @@ jobs:
           path: |
             profile/stats.svg
             profile/top-langs.svg
-          if-no-files-found: error
+          if-no-files-found: ignore
 
   commit-cards:
     needs:
@@ -116,12 +137,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Clean old cards
-        run: |
-          mkdir -p profile/repos
-          rm -f profile/repos/*.svg
-          rm -f profile/pin-*.svg
 
       - name: Download generated cards
         uses: actions/download-artifact@v4
@@ -137,13 +152,15 @@ jobs:
         run: |
           mkdir -p profile/repos
 
-          cp artifacts/summary-cards/stats.svg profile/stats.svg
-          cp artifacts/summary-cards/top-langs.svg profile/top-langs.svg
+          if test -d artifacts; then
+            find artifacts -mindepth 2 -maxdepth 2 -type f -name "*.svg" \
+              ! -name "stats.svg" \
+              ! -name "top-langs.svg" \
+              -exec cp {} profile/repos/ \;
 
-          find artifacts -mindepth 2 -maxdepth 2 -type f -name "*.svg" \
-            ! -name "stats.svg" \
-            ! -name "top-langs.svg" \
-            -exec cp {} profile/repos/ \;
+            find artifacts/summary-cards -maxdepth 1 -type f -name "*.svg" \
+              -exec cp {} profile/ \; 2>/dev/null || true
+          fi
 
           echo "Final profile files:"
           find profile -type f -name "*.svg" -print

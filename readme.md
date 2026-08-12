@@ -2,7 +2,9 @@
 <div align="center">
 
   <div style="display: inline-flex; align-items: center; gap: 18px;">
-    <img src="./profile/petit_chr_1056_105602_0100.png" width="120" alt="avatar" />
+    <a href="https://github.com/mikumifa">
+      <img src="./profile/petit_chr_1056_105602_0100.png" width="120" alt="mikumifa avatar" />
+    </a>
     <h1>Hi, I'm miku mifa 👋</h1>
   </div>
 
@@ -22,8 +24,12 @@
 <br/>
 
 <div align="center">
-  <img src="./profile/stats.svg" alt="GitHub Stats" />
-  <img src="./profile/top-langs.svg" alt="Top Languages" />
+  <a href="https://github.com/mikumifa">
+    <img src="./profile/stats.svg" alt="mikumifa GitHub Stats" />
+  </a>
+  <a href="https://github.com/mikumifa?tab=repositories">
+    <img src="./profile/top-langs.svg" alt="mikumifa Top Languages" />
+  </a>
 </div>
 
 <br/>
@@ -32,16 +38,16 @@
 
 <div align="center">
   <div style="max-width: 900px; text-align: left;">
-    <a href="./biliTickerBuy">
+    <a href="https://github.com/mikumifa/biliTickerBuy">
       <img src="./profile/repos/biliTickerBuy.svg" alt="biliTickerBuy" width="285" />
     </a>
-    <a href="./biliTickerSkill">
+    <a href="https://github.com/mikumifa/biliTickerSkill">
       <img src="./profile/repos/biliTickerSkill.svg" alt="biliTickerSkill" width="285" />
     </a>
-    <a href="./biliTickerStorm">
+    <a href="https://github.com/mikumifa/biliTickerStorm">
       <img src="./profile/repos/biliTickerStorm.svg" alt="biliTickerStorm" width="285" />
     </a>
-    <a href="./BiliShareMall">
+    <a href="https://github.com/mikumifa/BiliShareMall">
       <img src="./profile/repos/BiliShareMall.svg" alt="BiliShareMall" width="285" />
     </a>
   </div>
@@ -51,13 +57,13 @@
 
 <div align="center">
   <div style="max-width: 900px; text-align: left;">
-    <a href="./GS-Quant">
+    <a href="https://github.com/mikumifa/GS-Quant">
       <img src="./profile/repos/GS-Quant.svg" alt="GS-Quant" width="285" />
     </a>
-    <a href="./DMEA">
+    <a href="https://github.com/mikumifa/DMEA">
       <img src="./profile/repos/DMEA.svg" alt="DMEA" width="285" />
     </a>
-    <a href="./HUMEA">
+    <a href="https://github.com/mikumifa/HUMEA">
       <img src="./profile/repos/HUMEA.svg" alt="HUMEA" width="285" />
     </a>
   </div>
@@ -67,10 +73,10 @@
 
 <div align="center">
   <div style="max-width: 900px; text-align: left;">
-    <a href="./UmaShow">
+    <a href="https://github.com/mikumifa/UmaShow">
       <img src="./profile/repos/UmaShow.svg" alt="UmaShow" width="285" />
     </a>
-    <a href="./palworld_best_way">
+    <a href="https://github.com/mikumifa/palworld_best_way">
       <img src="./profile/repos/palworld_best_way.svg" alt="palworld_best_way" width="285" />
     </a>
   </div>
