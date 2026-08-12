@@ -61,10 +61,15 @@ jobs:
           path: profile/repos/${{ matrix.repo }}.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check generated file
+      - name: Validate generated repository card
         run: |
-          echo "Generated files:"
-          find profile -type f -name "*.svg" -print
+          card="profile/repos/${{ matrix.repo }}.svg"
+          test -s "$card"
+          grep -q '<svg' "$card"
+          if grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
+            echo "The generated card contains an API error; keeping the last valid card." >&2
+            exit 1
+          fi
 
       - name: Upload repo card
         uses: actions/upload-artifact@v4
@@ -98,6 +103,17 @@ jobs:
           options: username=${{ github.repository_owner }}&layout=compact&langs_count=6
           path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate generated summary cards
+        run: |
+          for card in profile/stats.svg profile/top-langs.svg; do
+            test -s "$card"
+            grep -q '<svg' "$card"
+            if grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
+              echo "$card contains an API error; keeping the last valid cards." >&2
+              exit 1
+            fi
+          done
 
       - name: Upload summary cards
         uses: actions/upload-artifact@v4
