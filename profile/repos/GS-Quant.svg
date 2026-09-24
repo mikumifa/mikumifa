@@ -20,15 +20,15 @@
             /* Selector detects Firefox */
             .header { font-size: 15.5px; }
           }
-
+          
     .description { font: 400 13px 'Segoe UI', Ubuntu, Sans-Serif; fill: #434d58 }
     .gray { font: 400 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #434d58 }
     .icon { fill: #586069 }
     .badge { font: 600 11px 'Segoe UI', Ubuntu, Sans-Serif; }
     .badge rect { opacity: 0.2 }
+  
 
-
-
+          
       /* Animations */
       @keyframes scaleInAnimation {
         from {
@@ -46,11 +46,11 @@
           opacity: 1;
         }
       }
-
+    
           * { animation-duration: 0s !important; animation-delay: 0s !important; }
         </style>
 
-
+        
 
         <rect
           data-testid="card-bg"
@@ -64,7 +64,7 @@
           stroke-opacity="1"
         />
 
-
+        
       <g
         data-testid="card-title"
         transform="translate(25, 35)"
@@ -90,14 +90,14 @@
       >GS-Quant</text>
     </g>
       </g>
-
+    
 
         <g
           data-testid="main-card-body"
           transform="translate(0, 55)"
         >
-
-
+          
+    
 
     <text class="description" x="25" y="-5">
       <tspan dy="1.2em" x="25">Implementation of the ACL 2026 paper "GS-Quant: Granular</tspan><tspan dy="1.2em" x="25">Semantic and Generative Structural Quantization for</tspan><tspan dy="1.2em" x="25">Knowledge Graph Completion"</tspan>
@@ -122,7 +122,7 @@
       </svg>
     </g><g transform="translate(20, 0)"><text data-testid="stargazers" class="gray">12</text></g></g>
     </g>
-
+  
         </g>
       </svg>
-
+    
