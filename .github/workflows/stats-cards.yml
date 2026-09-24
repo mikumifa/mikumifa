@@ -19,11 +19,23 @@ jobs:
       repos: ${{ steps.list.outputs.repos }}
 
     steps:
+      # GITHUB_TOKEN is an installation token scoped to this repository. The
+      # stats action also queries the owner's other repositories, so use a PAT
+      # that can read every repository which should have a card.
+      - name: Check stats token
+        env:
+          README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+        run: |
+          if test -z "$README_STATS_TOKEN"; then
+            echo "Add a README_STATS_TOKEN repository secret with read access to the repositories shown on the profile." >&2
+            exit 1
+          fi
+
       - name: List non-fork repositories
         id: list
         env:
           OWNER: ${{ github.repository_owner }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.README_STATS_TOKEN }}
         run: |
           repos=$(
             gh repo list "$OWNER" \
@@ -59,7 +71,7 @@ jobs:
           card: pin
           options: username=${{ github.repository_owner }}&repo=${{ matrix.repo }}
           path: profile/repos/${{ matrix.repo }}.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.README_STATS_TOKEN }}
 
       - name: Validate generated repository card
         id: validate
@@ -89,6 +101,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check stats token
+        env:
+          README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+        run: |
+          if test -z "$README_STATS_TOKEN"; then
+            echo "Add a README_STATS_TOKEN repository secret with read access to the repositories shown on the profile." >&2
+            exit 1
+          fi
+
       - name: Prepare directory
         run: |
           mkdir -p profile
@@ -99,7 +120,7 @@ jobs:
           card: stats
           options: username=${{ github.repository_owner }}&show_icons=true
           path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.README_STATS_TOKEN }}
 
       - name: Generate top languages card
         uses: readme-tools/github-readme-stats-action@v1
@@ -107,7 +128,7 @@ jobs:
           card: top-langs
           options: username=${{ github.repository_owner }}&layout=compact&langs_count=6
           path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.README_STATS_TOKEN }}
 
       - name: Validate generated summary cards
         run: |
