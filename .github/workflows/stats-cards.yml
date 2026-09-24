@@ -19,11 +19,23 @@ jobs:
       repos: ${{ steps.list.outputs.repos }}
 
     steps:
+      # GITHUB_TOKEN is an installation token scoped to this repository. The
+      # stats action also queries the owner's other repositories, so use a PAT
+      # that can read every repository which should have a card.
+      - name: Check stats token
+        env:
+          README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+        run: |
+          if test -z "$README_STATS_TOKEN"; then
+            echo "Add a README_STATS_TOKEN repository secret with read access to the repositories shown on the profile." >&2
+            exit 1
+          fi
+
       - name: List non-fork repositories
         id: list
         env:
           OWNER: ${{ github.repository_owner }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.README_STATS_TOKEN }}
         run: |
           repos=$(
             gh repo list "$OWNER" \
@@ -59,16 +71,20 @@ jobs:
           card: pin
           options: username=${{ github.repository_owner }}&repo=${{ matrix.repo }}
           path: profile/repos/${{ matrix.repo }}.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.README_STATS_TOKEN }}
 
       - name: Validate generated repository card
+        id: validate
         run: |
           card="profile/repos/${{ matrix.repo }}.svg"
-          test -s "$card"
-          grep -q '<svg' "$card"
-          if grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
-            echo "The generated card contains an API error; keeping the last valid card." >&2
-            exit 1
+          if test -s "$card" \
+            && grep -q '<svg' "$card" \
+            && ! grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "The generated card is invalid; keeping the version already in the repository." >&2
+            rm -f "$card"
+            echo "valid=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Upload repo card
@@ -85,6 +101,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check stats token
+        env:
+          README_STATS_TOKEN: ${{ secrets.README_STATS_TOKEN }}
+        run: |
+          if test -z "$README_STATS_TOKEN"; then
+            echo "Add a README_STATS_TOKEN repository secret with read access to the repositories shown on the profile." >&2
+            exit 1
+          fi
+
       - name: Prepare directory
         run: |
           mkdir -p profile
@@ -95,7 +120,7 @@ jobs:
           card: stats
           options: username=${{ github.repository_owner }}&show_icons=true
           path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.README_STATS_TOKEN }}
 
       - name: Generate top languages card
         uses: readme-tools/github-readme-stats-action@v1
@@ -103,16 +128,16 @@ jobs:
           card: top-langs
           options: username=${{ github.repository_owner }}&layout=compact&langs_count=6
           path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.README_STATS_TOKEN }}
 
       - name: Validate generated summary cards
         run: |
           for card in profile/stats.svg profile/top-langs.svg; do
-            test -s "$card"
-            grep -q '<svg' "$card"
-            if grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
-              echo "$card contains an API error; keeping the last valid cards." >&2
-              exit 1
+            if ! test -s "$card" \
+              || ! grep -q '<svg' "$card" \
+              || grep -Eqi 'Something went wrong|Resource not accessible|Repository Not found' "$card"; then
+              echo "$card is invalid; keeping the version already in the repository." >&2
+              rm -f "$card"
             fi
           done
 
